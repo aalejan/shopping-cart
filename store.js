@@ -1,8 +1,18 @@
 import items from './items.json'
 const storeItemTemplate = document.querySelector('#store-item-template')
 const storeItemContainer= document.querySelector('[data-store-container]')
+import { addToCart } from './shoppingCart.js'
 
 export function setupStore(){
+
+    document.addEventListener('click', e => {
+        if(e.target.matchers('[data-add-to-cart-button]')){
+            e.target.closest('[data')
+            addToCart(id)
+
+        }
+    })
+
 items.forEach(renderStoreItem)
 
 }
