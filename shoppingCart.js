@@ -10,9 +10,10 @@ export function setupShoppingCart(){}
      cartItemsWrapper.classList.toggle('invisible')
  })
 
- export function addToCart(){
+ export function addToCart(id){
 
     shoppingCart.push({id: id, quantity: 1})
+    console.log(shoppingCart)
 }
 
 

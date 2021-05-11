@@ -6,8 +6,9 @@ import { addToCart } from './shoppingCart.js'
 export function setupStore(){
 
     document.addEventListener('click', e => {
-        if(e.target.matchers('[data-add-to-cart-button]')){
-            e.target.closest('[data')
+        if(e.target.matches('[data-add-to-cart-button]')){
+            const id = e.target.closest('[data-store-item]')
+            .dataset.itemId
             addToCart(id)
 
         }
