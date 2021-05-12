@@ -9,7 +9,7 @@ export function setupStore(){
         if(e.target.matches('[data-add-to-cart-button]')){
             const id = e.target.closest('[data-store-item]')
             .dataset.itemId
-            addToCart(id)
+            addToCart(parseInt(id))
 
         }
     })
@@ -28,7 +28,7 @@ const name = storeItem.querySelector('[data-name]')
 name.innerText = item.name 
 
 
-const image = storeItem.querySelector('[data-image')
+const image = storeItem.querySelector('[data-image]')
 image.src = `https://dummyimage.com/210x130/${item.imageColor}/${item.imageColor}`
 
 const catagory = storeItem.querySelector('[data-catagory]')
