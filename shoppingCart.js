@@ -5,12 +5,22 @@ const cartItemTemplate = document.querySelector('#cart-item-template')
 const cartItemsContainer = document.querySelector('[data-cart-items-container]')
 const cartQuantity = document.querySelector('[data-cart-quantity]')
 const cartTotal = document.querySelector('[data-cart-total]')
-
+const cart = document.querySelector('[data-cart]')
 let shoppingCart = []
 
 
+export function setupShoppingCart(){
 
-export function setupShoppingCart(){}
+    document.addEventListener('click', e => {
+        if(e.target.matches('[data-remove-from-cart-button]')){
+            const id = parseInt(e.target.closest('[data-item]')
+            .dataset.itemId)
+            removeFromCart(id)
+        }
+    })
+
+    renderCart()
+}
 
  cartButton.addEventListener('click', () => {
      cartItemsWrapper.classList.toggle('invisible')
@@ -24,14 +34,28 @@ export function setupShoppingCart(){}
         shoppingCart.push({id: id, quantity: 1})
     }
 
-    
-    console.log(shoppingCart)
     renderCart()
 }
 
+function removeFromCart(id){
+    const existingItem = shoppingCart.find(entry => entry.id === id )
+    if(existingItem == null) return
+    shoppingCart = shoppingCart.filter(entry => entry.id != id)
+    renderCart()
+}
+
+function renderCart(){
+    if(shoppingCart.length === 0){
+        cart.classList.add('invisible')
+        cartItemsWrapper.classList.add('invisible')
+    }else{
+        cart.classList.remove('invisible')
+        renderCartItems()
+    }
+}
 
 
- function renderCart(){
+ function renderCartItems(){
      cartItemsContainer.innerHTML = ''
 
      cartQuantity.innerText = shoppingCart.length
@@ -43,11 +67,11 @@ export function setupShoppingCart(){}
 
      cartTotal.innerText = `$${total.toFixed(2)}`
 
-    shoppingCart.forEach(entry => {
-        
+    
+shoppingCart.forEach(entry => {
 
-        const item = items.find( i => entry.id === i.id)
-        const cartItem = cartItemTemplate.content.cloneNode(true)
+const item = items.find( i => entry.id === i.id)
+const cartItem = cartItemTemplate.content.cloneNode(true)
 
 const container = cartItem.querySelector('[data-item]')
 container.dataset.itemId = item.id
@@ -68,15 +92,8 @@ if(entry.quantity > 1) {
 const price = cartItem.querySelector('[data-price]')
 price.innerText = `$${((item.priceCents / 100) * entry.quantity).toFixed(2)}`
 
-const removeCartItemBtn = cartItem.querySelector('[data-remove-from-cart-button]')
-removeCartItemBtn.addEventListener('click', () => {
-    shoppingCart.filter(item => item.id != entry.id )
-})
-
 cartItemsContainer.appendChild(cartItem)
-
-    })
-
+})
     
 }
 
